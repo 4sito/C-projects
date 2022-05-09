@@ -21,6 +21,9 @@ int board_vincente(char board[]) {
     for(int i=0; i<BOARD_LATO; i+=1) 
         if(tris_in_riga(board, i)==1 || tris_in_colonna(board, i)==1)
             return 1;
+    
+    tris_in_diagonali(board);
+
     if (tris_in_diagonali(board)==1)
         return 1;
     return 0;
@@ -31,8 +34,10 @@ void effettua_mossa(char board[], int x, int y, char simbolo_giocatore) {
     /*
         POST board cambiata aggiungendo la mossa (x,y) se ammissibile.  
     */
-    if(mossa_ammissibile(board, x, y))
+    if(mossa_ammissibile(board, x, y) )
         board[x*BOARD_LATO+y] = simbolo_giocatore;
+   
+        
 
 }
 
@@ -52,8 +57,8 @@ int mossa_ammissibile(char board[], int x, int y) {
     // Inserite qua il vostro codice
     if(x*y > BOARD_LATO*BOARD_LATO)
         return 0;
-    if(board[x*BOARD_LATO+y] != CASELLA_VUOTA) 
-        return 0;                        // casella già presa
+    if(board[x*BOARD_LATO+y] != CASELLA_VUOTA)
+        return 0;                         // casella già presa
     return 1;
 }
 
@@ -66,6 +71,7 @@ int tris_in_riga(char board[], int num_riga) {
     */
     if (board[num_riga*BOARD_LATO] == CASELLA_VUOTA)
         return 0;
+
     for(int i=1; i<BOARD_LATO; i++)
         if (board[num_riga*BOARD_LATO]!=board[num_riga*BOARD_LATO+i])
             return 0;    
@@ -76,18 +82,83 @@ int tris_in_riga(char board[], int num_riga) {
 int tris_in_colonna(char board[], int num_col) {
     /* 
         POST Restituisce 
-                1 se la riga num_riga è non vuota e con tutti i simboli uguali
+                1 se la col num_col è non vuota e con tutti i simboli uguali
                 0 altrimenti
     */
 
     // Inserite qua il vostro codice
-    return 0;
+    if (board[num_col] == CASELLA_VUOTA)
+        return 0;
+
+    for (int i = 1; i < BOARD_LATO; ++i)
+       if (board[num_col] != board[num_col+BOARD_LATO*i]) 
+          return 0;
+    
+    return 1;
 }
 
+int diagonale_principale(char board[], char pl){
+
+    for (int i = 1; i < BOARD_LATO; ++i) {
+        for (int j = 1; j < BOARD_LATO; ++j) {
+            
+        if(i == j) // condizione per la diagonale principale 
+            if( pl != board[i*BOARD_LATO+j])
+                return 0;
+             
+        }
+        
+    }
+
+    return 1;
+
+}
+
+int diagonale_secondaria(char board[], char pl){
+
+    for (int i = 1; i < BOARD_LATO; ++i) {
+        for (int j = 1; j < BOARD_LATO; ++j) {
+    
+            if( (i + j) == BOARD_LATO)
+                if( pl != board[(i*BOARD_LATO) +j])
+                    return 0;
+            
+        }
+        
+    }
+
+    return 1;
+ 
+
+}
 
 int tris_in_diagonali(char board[]) {
+    
+    char pl;
+    // controlliamo prima la diagonale principale
+    if(board[0] == CASELLA_VUOTA && board[2] == CASELLA_VUOTA)
+        return 0; // se l'inizio di una delle due diagonali è una casella vuota termina la funzione;
+    
+    
+    pl = board[0];
+    
+    if(pl != CASELLA_VUOTA){    
+    if(diagonale_principale(board, pl) == 1)
+        return 1;
+        
+    }
 
-    // Inserite qua il vostro codice
+    
+    pl = board[2];
+
+    if(pl != CASELLA_VUOTA){
+    if(diagonale_secondaria(board, pl) == 1 )
+        return 1;
+        
+    }
+
+
+   // Inserite qua il vostro codice
     return 0;
 }
 

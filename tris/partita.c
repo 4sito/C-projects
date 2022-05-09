@@ -4,29 +4,40 @@
 #include <stdio.h>
 
 void gioca(char board[], void(*p1)(int *x, int *y), void(*p2)(int *x, int *y)) {
+    int a, b, x, y;
 
     // Inserite qua il vostro codice
-    while(board_riempita(board) == 0 || board_vincente(board) == 0){
+    // while(board_riempita(board) == 0 || board_vincente(board) == 0){
         
         
-        scegli_mossa_utente( (int*)p1,  (int*)p1 ); 
+        (*p1)(&x, &y); // scegli mossa utente  
         
-        while(mossa_ammissibile(board,*(int*)p1, *(int*)p1 ) == 0 ){
+        while(mossa_ammissibile(board, x, y ) == 0 ){
         
+        printf("mossa non ammessa, immetti nuovamente: \n");
 
-        scegli_mossa_utente( (int*)p1,  (int*)p1 ); 
+        (*p1)(&x, &y); // scegli mossa utente  
 
         }
-
-        effettua_mossa(board, *( (int*) p1), *( (int*) p1), SIMB_X);
-
-        while(mossa_ammissibile(board, *( (int*) p2), *( (int*) p2) ) == 0){
         
-        scegli_mossa_utente( ( (int*) p2) , ( (int*) p2) );
+        effettua_mossa(board, x, y, SIMB_X);
+
+        print_board(board);
+
+        if(board_riempita(board) == 1 || board_vincente(board) == 1)
+            return;
+
+        (*p2)(&a, &b);
+        
+        while(mossa_ammissibile(board, a, b) == 0){
+        
+        //printf("mossa non ammessa, immetti nuovamente: \n");
+
+        (*p2)(&a, &b);
         
         }
 
-        effettua_mossa(board, *( (int*) p2), *( (int*) p2) , SIMB_O);
+        effettua_mossa(board, a, b , SIMB_O);
 
-    }
+    
 }

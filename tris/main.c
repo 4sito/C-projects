@@ -5,7 +5,6 @@
 #include "partita.h"
 #include "giocatore.h"
 
-
 int main(int argc, char *argv[]) {
 
     srand(1);
@@ -33,14 +32,19 @@ int main(int argc, char *argv[]) {
     reset_board(board);
 
     while(continua == 's'){
+        while(board_riempita(board) == 0 && board_vincente(board) == 0){
         print_board(board);
-
+        
         if(strcmp(argv[1], "1vs1")==0)
             gioca(board, scegli_mossa_utente, scegli_mossa_utente);
         else
             gioca(board, scegli_mossa_utente, scegli_mossa_computer);
-        reset_board(board);
 
+        }
+        
+        print_board(board);
+
+        reset_board(board);
         printf("Altra partita? (s/n)\n");
         scanf(" %c%*c", &continua);
     }

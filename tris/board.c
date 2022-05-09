@@ -116,13 +116,13 @@ int diagonale_principale(char board[], char pl){
 
 int diagonale_secondaria(char board[], char pl){
 
-    for (int i = 1; i < BOARD_LATO; ++i) {
-        for (int j = 1; j < BOARD_LATO; ++j) {
+    for (int i = 0; i < BOARD_LATO; ++i) {
+        for (int j = 0; j < BOARD_LATO; ++j) {
     
-            if( (i + j) == BOARD_LATO)
-                if( pl != board[(i*BOARD_LATO) +j])
+            if( i+j == BOARD_LATO-1){
+                if( pl != board[(i*BOARD_LATO)+j] )
                     return 0;
-            
+            }
         }
         
     }
@@ -137,21 +137,19 @@ int tris_in_diagonali(char board[]) {
     char pl;
     // controlliamo prima la diagonale principale
     if(board[0] == CASELLA_VUOTA && board[2] == CASELLA_VUOTA)
-        return 0; // se l'inizio di una delle due diagonali è una casella vuota termina la funzione;
+        return 0; // se l'inizio di entrambe le diagonali è una casella vuota termina la funzione;
     
     
-    pl = board[0];
     
-    if(pl != CASELLA_VUOTA){    
+    if(board[0] != CASELLA_VUOTA){    
+        pl = board[0];
     if(diagonale_principale(board, pl) == 1)
         return 1;
         
     }
 
-    
-    pl = board[2];
-
-    if(pl != CASELLA_VUOTA){
+    if(board[2] != CASELLA_VUOTA){
+        pl = board[2];
     if(diagonale_secondaria(board, pl) == 1 )
         return 1;
         

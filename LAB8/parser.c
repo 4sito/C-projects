@@ -45,6 +45,7 @@ void leggi_studente(FILE* fp, Studente* s, int righe){
     rewind(fp);
 
 }
+
 void carica_studente(Studente *s){
 
 printf("Nome e Cognome studente:\n");

@@ -12,5 +12,8 @@ test_corso: corso.o studente.o test_corso.c
 test_parser: corso.o studente.o parser.o test_parser.c
 	${CC} corso.o studente.o parser.o test_parser.c -o $@
 
+laureati: studenti_laureati.o main.c
+	${CC} studenti_laureati.o main.c -o main
+
 clear:
 	rm *.o

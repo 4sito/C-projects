@@ -5,6 +5,23 @@
 #include "partita.h"
 #include "giocatore.h"
 
+void messaggio_finale(char board[]){
+
+    if(board_riempita(board)){
+
+        printf("Stallo");
+        return;
+
+    }
+
+    if(board_vincente(board)){
+        
+        
+    }
+
+
+
+}
 int main(int argc, char *argv[]) {
 
     srand(1);
@@ -41,7 +58,9 @@ int main(int argc, char *argv[]) {
             gioca(board, scegli_mossa_utente, scegli_mossa_computer);
 
         }
-        
+
+        messaggio_finale(board);
+
         print_board(board);
 
         reset_board(board);
